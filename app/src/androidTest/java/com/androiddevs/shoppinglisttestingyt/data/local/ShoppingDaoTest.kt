@@ -1,13 +1,8 @@
 package com.androiddevs.shoppinglisttestingyt.data.local
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.androiddevs.shoppinglisttestingyt.getOrAwaitValue
-import com.androiddevs.shoppinglisttestingyt.launchFragmentInHiltContainer
-import com.androiddevs.shoppinglisttestingyt.ui.ShoppingFragment
 import com.google.common.truth.Truth.assertThat
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -17,18 +12,28 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import javax.inject.Inject
 import javax.inject.Named
 
 @ExperimentalCoroutinesApi
+/**
+@SmallTest Denotes all tests are unit test,
+if its Instrumentation it should be @MediumTest, if UI its @LargeTest
+NOTE: This filter can be given per test cases if all the test cases in a class doesn't fit in a single filter
+Ref: https://i.stack.imgur.com/HfzyW.png
+ */
 @SmallTest
+
 @HiltAndroidTest
 class ShoppingDaoTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
+    /**
+     * This rules, makes all the functions in every test execute one after other in the same thread
+     *      ie, like a suspend fn
+     * */
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
@@ -49,15 +54,17 @@ class ShoppingDaoTest {
     }
 
     @Test
-    fun insertShoppingItem() = runBlockingTest {
+    fun insertShoppingItem() =
+        runBlockingTest { // optimised for test cases, also have additional testing functionalities
 
-        val shoppingItem = ShoppingItem("name", 1, 1f, "url", id = 1)
-        dao.insertShoppingItem(shoppingItem)
+            val shoppingItem = ShoppingItem("name", 1, 1f, "url", id = 1)
+            dao.insertShoppingItem(shoppingItem)
 
-        val allShoppingItems = dao.observeAllShoppingItems().getOrAwaitValue()
+            val allShoppingItems = dao
+                .observeAllShoppingItems().getOrAwaitValue() //Converts live data synchronous
 
-        assertThat(allShoppingItems).contains(shoppingItem)
-    }
+            assertThat(allShoppingItems).contains(shoppingItem)
+        }
 
     @Test
     fun deleteShoppingItem() = runBlockingTest {
@@ -65,7 +72,8 @@ class ShoppingDaoTest {
         dao.insertShoppingItem(shoppingItem)
         dao.deleteShoppingItem(shoppingItem)
 
-        val allShoppingItems = dao.observeAllShoppingItems().getOrAwaitValue()
+        val allShoppingItems = dao
+            .observeAllShoppingItems().getOrAwaitValue() //Converts live data synchronous
 
         assertThat(allShoppingItems).doesNotContain(shoppingItem)
     }

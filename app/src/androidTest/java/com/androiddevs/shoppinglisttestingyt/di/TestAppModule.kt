@@ -17,6 +17,7 @@ object TestAppModule {
     @Provides
     @Named("test_db")
     fun provideInMemoryDb(@ApplicationContext context: Context) =
+        // inMemoryDatabase -> saves only in RAM not in permanent storage
         Room.inMemoryDatabaseBuilder(context, ShoppingItemDatabase::class.java)
             .allowMainThreadQueries()
             .build()

@@ -1,11 +1,15 @@
 package com.androiddevs.shoppinglisttestingyt.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.androiddevs.shoppinglisttestingyt.R
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * Room DB testing is an Instrumentation test since we have to use SQLite DB in our device
+ *
+ * */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
