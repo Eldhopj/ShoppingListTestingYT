@@ -6,6 +6,12 @@ import com.androiddevs.shoppinglisttestingyt.data.local.ShoppingItem
 import com.androiddevs.shoppinglisttestingyt.data.remote.responses.ImageResponse
 import com.androiddevs.shoppinglisttestingyt.other.Resource
 
+/**
+ * There are 2 types of test doubles
+ *      eg: Fakes and Mocks, here we are using Fakes
+ *
+ * We here wries the fake repo to stimulate the values inorder for testing the ViewModel
+ * */
 class FakeShoppingRepositoryAndroidTest : ShoppingRepository {
 
     private val shoppingItems = mutableListOf<ShoppingItem>()
@@ -47,7 +53,7 @@ class FakeShoppingRepositoryAndroidTest : ShoppingRepository {
     }
 
     override suspend fun searchForImage(imageQuery: String): Resource<ImageResponse> {
-        return if(shouldReturnNetworkError) {
+        return if (shouldReturnNetworkError) { // stimulates nw error
             Resource.error("Error", null)
         } else {
             Resource.success(ImageResponse(listOf(), 0, 0))

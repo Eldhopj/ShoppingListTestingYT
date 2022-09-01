@@ -10,6 +10,12 @@ import kotlinx.coroutines.test.setMain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
+/**
+ * Coroutine MainDispatcher uses android main looper in real app scenario
+ * which is not available on tests
+ *
+ * This class will provider the MainDispatcher
+ * */
 @ExperimentalCoroutinesApi
 class MainCoroutineRule(
     private val dispatcher: CoroutineDispatcher = TestCoroutineDispatcher()

@@ -1,7 +1,6 @@
 package com.androiddevs.shoppinglisttestingyt.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.fragment.app.FragmentFactory
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.test.espresso.Espresso.onView
@@ -30,6 +29,10 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class ImagePickFragmentTest {
 
+    /**
+     * This rules, makes all the functions in every test execute one after other in the same thread
+     *      ie, like a suspend fn
+     * */
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 

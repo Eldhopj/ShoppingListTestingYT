@@ -5,6 +5,13 @@ import android.content.Context
 import androidx.test.runner.AndroidJUnitRunner
 import dagger.hilt.android.testing.HiltTestApplication
 
+/**
+ * IMPORTANT CLASS
+ * Replaces AndroidJUnitRunner with hilt runner for hilt annotations
+ *
+ * TODO : update testInstrumentationRunner in appGradle -> Android -> defaultConfig
+ *
+ * */
 class HiltTestRunner : AndroidJUnitRunner() {
 
     override fun newApplication(

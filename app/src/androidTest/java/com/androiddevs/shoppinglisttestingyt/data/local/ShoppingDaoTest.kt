@@ -38,13 +38,13 @@ class ShoppingDaoTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Inject
-    @Named("test_db")
+    @Named("test_db") // if we didn't annotate with @Named, for test classes it will take the dependency from app module
     lateinit var database: ShoppingItemDatabase
     private lateinit var dao: ShoppingDao
 
     @Before
     fun setup() {
-        hiltRule.inject()
+        hiltRule.inject() // makes inject dependencies
         dao = database.shoppingDao()
     }
 
@@ -87,7 +87,8 @@ class ShoppingDaoTest {
         dao.insertShoppingItem(shoppingItem2)
         dao.insertShoppingItem(shoppingItem3)
 
-        val totalPriceSum = dao.observeTotalPrice().getOrAwaitValue()
+        val totalPriceSum =
+            dao.observeTotalPrice().getOrAwaitValue() // Converts live data synchronous
 
         assertThat(totalPriceSum).isEqualTo(2 * 10f + 4 * 5.5f)
     }

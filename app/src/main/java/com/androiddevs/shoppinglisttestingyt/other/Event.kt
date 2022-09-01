@@ -1,5 +1,10 @@
 package com.androiddevs.shoppinglisttestingyt.other
 
+/**
+ * Prevents sending of data multiple times,
+ *      eg: prevents again sending data on screen rotation
+ *
+ * */
 open class Event<out T>(private val content: T) {
 
     var hasBeenHandled = false

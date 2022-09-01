@@ -26,13 +26,17 @@ import org.mockito.Mockito.verify
 import javax.inject.Inject
 
 @MediumTest
-@HiltAndroidTest
+@HiltAndroidTest // For inject dependencies into test classes
 @ExperimentalCoroutinesApi
 class AddShoppingItemFragmentTest {
 
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
+    /**
+     * This rules, makes all the functions in every test execute one after other in the same thread
+     *      ie, like a suspend fn
+     * */
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 

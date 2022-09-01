@@ -2,11 +2,9 @@ package com.androiddevs.shoppinglisttestingyt.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.androiddevs.shoppinglisttestingyt.MainCoroutineRule
-import com.androiddevs.shoppinglisttestingyt.data.local.ShoppingItem
 import com.androiddevs.shoppinglisttestingyt.getOrAwaitValueTest
 import com.androiddevs.shoppinglisttestingyt.other.Constants
 import com.androiddevs.shoppinglisttestingyt.other.Status
-import com.androiddevs.shoppinglisttestingyt.repositories.DefaultShoppingRepository
 import com.androiddevs.shoppinglisttestingyt.repositories.FakeShoppingRepository
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,9 +15,17 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class ShoppingViewModelTest {
 
+    /**
+     * This rules, makes all the functions in every test execute one after other in the same thread
+     *      ie, like a suspend fn
+     * */
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
+    /**
+     * Coroutine MainDispatcher uses android main looper in real app scenario
+     * which is not available on tests
+     * */
     @get:Rule
     var mainCoroutineRule = MainCoroutineRule()
 
@@ -36,6 +42,7 @@ class ShoppingViewModelTest {
 
         val value = viewModel.insertShoppingItemStatus.getOrAwaitValueTest()
 
+        // TODO : check how to write test case without status
         assertThat(value.getContentIfNotHandled()?.status).isEqualTo(Status.ERROR)
     }
 

@@ -15,7 +15,7 @@ import javax.inject.Named
 object TestAppModule {
 
     @Provides
-    @Named("test_db")
+    @Named("test_db") // if we didn't annotate with @Named, for test classes it will take the dependency from app module
     fun provideInMemoryDb(@ApplicationContext context: Context) =
         // inMemoryDatabase -> saves only in RAM not in permanent storage
         Room.inMemoryDatabaseBuilder(context, ShoppingItemDatabase::class.java)
